@@ -67,7 +67,7 @@ const AuthPage = () => {
       return;
     }
     toast({ title: fr ? "Bienvenue !" : "Welcome back!" });
-    navigate("/profile", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -99,7 +99,7 @@ const AuthPage = () => {
       title: fr ? "Compte créé 🎉" : "Account created 🎉",
       description: fr ? "Vous êtes connecté." : "You are signed in.",
     });
-    navigate("/profile", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   return (
