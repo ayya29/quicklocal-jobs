@@ -71,17 +71,22 @@ const ProfilePage = () => {
       <div className="rounded-3xl gradient-soft border border-border/60 p-6 md:p-10 shadow-card">
         <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
           <div className="flex h-24 w-24 items-center justify-center rounded-3xl gradient-warm text-accent-foreground font-display text-3xl font-extrabold shadow-glow">
-            {user.avatar}
+            {userView.avatar}
           </div>
           <div className="flex-1">
-            <h1 className="font-display text-3xl font-extrabold">{user.name}</h1>
+            <h1 className="font-display text-3xl font-extrabold">{userView.name}</h1>
             <div className="mt-2 flex flex-wrap gap-4 text-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" />{user.city}</span>
-              <span className="inline-flex items-center gap-1.5"><Star className="h-4 w-4 fill-accent text-accent" />{user.rating}</span>
-              <span>{user.completed} {t("profile.completed")}</span>
-              <span>{t("profile.member")} {user.member}</span>
+              <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" />{userView.city}</span>
+              <span className="inline-flex items-center gap-1.5"><Star className="h-4 w-4 fill-accent text-accent" />{userView.rating}</span>
+              <span>{userView.completed} {t("profile.completed")}</span>
+              <span>{t("profile.member")} {userView.member}</span>
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
+              {roles.map((r) => (
+                <span key={r} className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 text-accent border border-accent/30 px-3 py-1 text-xs font-bold uppercase tracking-wide">
+                  {r === "client" ? (fr ? "Client" : "Client") : r === "worker" ? (fr ? "Travailleur" : "Worker") : "Admin"}
+                </span>
+              ))}
               <Badge icon={Zap} label={t("trust.badge.fast")} />
               <Badge icon={Shield} label={t("trust.badge.reliable")} />
               <Badge icon={Award} label={t("trust.badge.top")} />
@@ -101,7 +106,7 @@ const ProfilePage = () => {
         <aside className="space-y-6">
           <div className="rounded-2xl bg-card border border-border/60 p-6 shadow-card">
             <h3 className="font-display font-bold text-lg mb-2">{t("profile.bio")}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{user.bio}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">{userView.bio}</p>
           </div>
           <div className="rounded-2xl bg-card border border-border/60 p-6 shadow-card">
             <h3 className="font-display font-bold text-lg mb-4">{t("profile.reviews")}</h3>
