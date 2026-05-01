@@ -57,7 +57,7 @@ const ProfilePage = () => {
     member: memberYear,
     bio: profile?.bio || (fr ? "Aucune bio pour le moment." : "No bio yet."),
   };
-  const user_legacy = userView;
+  
 
   const reviews = [
     { author: "Sofia M.", rating: 5, text: "Travail impeccable et ponctuel !" },
