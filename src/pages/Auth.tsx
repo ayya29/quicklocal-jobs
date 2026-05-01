@@ -46,7 +46,7 @@ const AuthPage = () => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && user) navigate("/profile", { replace: true });
+    if (!loading && user) navigate("/dashboard", { replace: true });
   }, [user, loading, navigate]);
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -67,7 +67,7 @@ const AuthPage = () => {
       return;
     }
     toast({ title: fr ? "Bienvenue !" : "Welcome back!" });
-    navigate("/profile", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -99,7 +99,7 @@ const AuthPage = () => {
       title: fr ? "Compte créé 🎉" : "Account created 🎉",
       description: fr ? "Vous êtes connecté." : "You are signed in.",
     });
-    navigate("/profile", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   return (
