@@ -155,10 +155,10 @@ const Index = () => {
                   {n}
                 </div>
                 <h3 className="mt-4 font-display font-bold text-lg">
-                  {t(`how.step${n}.title` as const)}
+                  {n === 1 ? t("how.step1.title") : n === 2 ? t("how.step2.title") : t("how.step3.title")}
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  {t(`how.step${n}.desc` as const)}
+                  {n === 1 ? t("how.step1.desc") : n === 2 ? t("how.step2.desc") : t("how.step3.desc")}
                 </p>
               </div>
             ))}
