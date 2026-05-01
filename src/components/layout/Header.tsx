@@ -21,6 +21,7 @@ export const Header = () => {
   const links = [
     { to: "/", label: t("nav.home") },
     { to: "/jobs", label: t("nav.jobs") },
+    ...(user ? [{ to: "/dashboard", label: "Dashboard" }] : []),
     { to: "/post", label: t("nav.post") },
     { to: "/profile", label: t("nav.profile") },
   ];
