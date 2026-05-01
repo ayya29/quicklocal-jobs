@@ -13,7 +13,10 @@ export default {
       },
     },
     extend: {
-      colors: {
+      fontFamily: {
+        display: ["'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+      },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
