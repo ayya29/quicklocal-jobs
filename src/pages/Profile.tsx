@@ -1,19 +1,63 @@
+import { Link } from "react-router-dom";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useAuth } from "@/hooks/useAuth";
 import { jobs } from "@/data/jobs";
 import { JobCard } from "@/components/jobs/JobCard";
-import { Star, Shield, Zap, Award, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Star, Shield, Zap, Award, MapPin, LogIn } from "lucide-react";
 
 const ProfilePage = () => {
-  const { t } = useI18n();
-  const user = {
-    name: "Alex Dupont",
-    avatar: "AD",
-    city: "Paris",
-    rating: 4.9,
-    completed: 28,
-    member: "2024",
-    bio: "Disponible le soir et le week-end. Sérieux, ponctuel, j'adore donner un coup de main près de chez moi.",
+  const { t, lang } = useI18n();
+  const { user, profile, roles, loading } = useAuth();
+  const fr = lang === "fr";
+
+  if (loading) {
+    return <div className="container py-20 text-center text-muted-foreground">…</div>;
+  }
+
+  if (!user) {
+    return (
+      <div className="container py-20 max-w-md text-center">
+        <h1 className="font-display text-3xl font-extrabold mb-3">
+          {fr ? "Connectez-vous pour voir votre profil" : "Sign in to view your profile"}
+        </h1>
+        <p className="text-muted-foreground mb-6">
+          {fr
+            ? "Créez un compte gratuit pour publier ou trouver des missions près de chez vous."
+            : "Create a free account to post or find missions near you."}
+        </p>
+        <div className="flex gap-3 justify-center">
+          <Button variant="hero" size="lg" asChild>
+            <Link to="/auth?mode=signup">{fr ? "Créer un compte" : "Sign up"}</Link>
+          </Button>
+          <Button variant="outline" size="lg" asChild>
+            <Link to="/auth"><LogIn className="h-4 w-4" />{fr ? "Se connecter" : "Sign in"}</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const displayName = profile?.full_name || user.email?.split("@")[0] || "User";
+  const initials = displayName
+    .split(" ")
+    .map((s) => s[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+  const memberYear = new Date(user.created_at).getFullYear().toString();
+
+  const userView = {
+    name: displayName,
+    avatar: initials,
+    city: profile?.city || (fr ? "Ville non renseignée" : "City not set"),
+    rating: 5.0,
+    completed: 0,
+    member: memberYear,
+    bio: profile?.bio || (fr ? "Aucune bio pour le moment." : "No bio yet."),
   };
+  const user_legacy = userView;
 
   const reviews = [
     { author: "Sofia M.", rating: 5, text: "Travail impeccable et ponctuel !" },
