@@ -1,0 +1,92 @@
+import { useI18n } from "@/i18n/I18nProvider";
+import { jobs } from "@/data/jobs";
+import { JobCard } from "@/components/jobs/JobCard";
+import { Star, Shield, Zap, Award, MapPin } from "lucide-react";
+
+const ProfilePage = () => {
+  const { t } = useI18n();
+  const user = {
+    name: "Alex Dupont",
+    avatar: "AD",
+    city: "Paris",
+    rating: 4.9,
+    completed: 28,
+    member: "2024",
+    bio: "Disponible le soir et le week-end. Sérieux, ponctuel, j'adore donner un coup de main près de chez moi.",
+  };
+
+  const reviews = [
+    { author: "Sofia M.", rating: 5, text: "Travail impeccable et ponctuel !" },
+    { author: "Camille L.", rating: 5, text: "Très professionnel, je recommande." },
+    { author: "Théo R.", rating: 4, text: "Bonne communication, mission accomplie." },
+  ];
+
+  return (
+    <div className="container py-12">
+      {/* Header card */}
+      <div className="rounded-3xl gradient-soft border border-border/60 p-6 md:p-10 shadow-card">
+        <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+          <div className="flex h-24 w-24 items-center justify-center rounded-3xl gradient-warm text-accent-foreground font-display text-3xl font-extrabold shadow-glow">
+            {user.avatar}
+          </div>
+          <div className="flex-1">
+            <h1 className="font-display text-3xl font-extrabold">{user.name}</h1>
+            <div className="mt-2 flex flex-wrap gap-4 text-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" />{user.city}</span>
+              <span className="inline-flex items-center gap-1.5"><Star className="h-4 w-4 fill-accent text-accent" />{user.rating}</span>
+              <span>{user.completed} {t("profile.completed")}</span>
+              <span>{t("profile.member")} {user.member}</span>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Badge icon={Zap} label={t("trust.badge.fast")} />
+              <Badge icon={Shield} label={t("trust.badge.reliable")} />
+              <Badge icon={Award} label={t("trust.badge.top")} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_360px]">
+        <section>
+          <h2 className="font-display text-xl font-extrabold mb-4">{t("profile.history")}</h2>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {jobs.slice(0, 4).map((j, i) => <JobCard key={j.id} job={j} index={i} />)}
+          </div>
+        </section>
+
+        <aside className="space-y-6">
+          <div className="rounded-2xl bg-card border border-border/60 p-6 shadow-card">
+            <h3 className="font-display font-bold text-lg mb-2">{t("profile.bio")}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{user.bio}</p>
+          </div>
+          <div className="rounded-2xl bg-card border border-border/60 p-6 shadow-card">
+            <h3 className="font-display font-bold text-lg mb-4">{t("profile.reviews")}</h3>
+            <ul className="space-y-4">
+              {reviews.map((r, i) => (
+                <li key={i} className="border-b border-border/60 last:border-0 pb-4 last:pb-0">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-sm">{r.author}</span>
+                    <span className="inline-flex items-center gap-0.5 text-accent">
+                      {Array.from({ length: r.rating }).map((_, k) => (
+                        <Star key={k} className="h-3.5 w-3.5 fill-accent" />
+                      ))}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">{r.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+};
+
+const Badge = ({ icon: Icon, label }: { icon: typeof Star; label: string }) => (
+  <span className="inline-flex items-center gap-1.5 rounded-full bg-card border border-border/60 px-3 py-1 text-xs font-semibold shadow-card">
+    <Icon className="h-3.5 w-3.5 text-accent" /> {label}
+  </span>
+);
+
+export default ProfilePage;
