@@ -1,14 +1,22 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Globe, Menu, X } from "lucide-react";
+import { Briefcase, Globe, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 export const Header = () => {
   const { t, lang, setLang } = useI18n();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const location = useLocation();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   const links = [
     { to: "/", label: t("nav.home") },
