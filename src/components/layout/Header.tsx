@@ -66,12 +66,21 @@ export const Header = () => {
             <Globe className="h-4 w-4" />
             <span className="uppercase">{lang}</span>
           </button>
-          <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
-            {t("nav.login")}
-          </Button>
-          <Button variant="hero" size="sm" className="hidden sm:inline-flex">
-            {t("nav.signup")}
-          </Button>
+          {user ? (
+            <Button variant="ghost" size="sm" className="hidden sm:inline-flex" onClick={handleLogout}>
+              <LogOut className="h-4 w-4" />
+              {lang === "fr" ? "Déconnexion" : "Log out"}
+            </Button>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" className="hidden sm:inline-flex" asChild>
+                <Link to="/auth">{t("nav.login")}</Link>
+              </Button>
+              <Button variant="hero" size="sm" className="hidden sm:inline-flex" asChild>
+                <Link to="/auth?mode=signup">{t("nav.signup")}</Link>
+              </Button>
+            </>
+          )}
           <button
             className="md:hidden p-2 rounded-lg hover:bg-muted"
             onClick={() => setOpen(!open)}
@@ -102,8 +111,20 @@ export const Header = () => {
               </NavLink>
             ))}
             <div className="flex gap-2 pt-2">
-              <Button variant="ghost" size="sm" className="flex-1">{t("nav.login")}</Button>
-              <Button variant="hero" size="sm" className="flex-1">{t("nav.signup")}</Button>
+              {user ? (
+                <Button variant="ghost" size="sm" className="flex-1" onClick={() => { setOpen(false); handleLogout(); }}>
+                  {lang === "fr" ? "Déconnexion" : "Log out"}
+                </Button>
+              ) : (
+                <>
+                  <Button variant="ghost" size="sm" className="flex-1" asChild>
+                    <Link to="/auth" onClick={() => setOpen(false)}>{t("nav.login")}</Link>
+                  </Button>
+                  <Button variant="hero" size="sm" className="flex-1" asChild>
+                    <Link to="/auth?mode=signup" onClick={() => setOpen(false)}>{t("nav.signup")}</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         </div>
